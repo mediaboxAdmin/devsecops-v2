@@ -77,7 +77,7 @@ function App() {
               className="advanced-form-input"
               placeholder="Enter your name"
               autoComplete="off"
-              disabled={loading}
+              disabled={loading} 
             />
           </div>
           <div>
