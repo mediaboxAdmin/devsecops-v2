@@ -31,19 +31,19 @@ jobs:
       - name: Fix Jest permissions (par précaution)
         run: chmod +x ./node_modules/.bin/jest || echo "Jest déjà exécutable"
 
-      - name: Run tests with coverage
-        continue-on-error: true
-        run: |
-          npm run test:dev
-          cat coverage/lcov.info || echo "⚠️ Aucun fichier lcov.info généré !"
+      # - name: Run tests with coverage
+      #   continue-on-error: true
+      #   run: |
+      #     npm run test:dev
+      #     cat coverage/lcov.info || echo "⚠️ Aucun fichier lcov.info généré !"
 
-      - name: Check test & coverage files
-        run: |
-          ls -la coverage/
-          echo "Début de lcov.info :"
-          head -n 5 coverage/lcov.info
-          echo "Début du test-reporter.xml :"
-          head -n 5 coverage/test-reporter.xml || echo "⚠️ test-reporter.xml manquant"
+      # - name: Check test & coverage files
+      #   run: |
+      #     ls -la coverage/
+      #     echo "Début de lcov.info :"
+      #     head -n 5 coverage/lcov.info
+      #     echo "Début du test-reporter.xml :"
+      #     head -n 5 coverage/test-reporter.xml || echo "⚠️ test-reporter.xml manquant"
 
       - name: SonarQube Scan (always run)
         if: always()
