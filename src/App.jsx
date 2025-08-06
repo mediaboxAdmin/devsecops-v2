@@ -1,33 +1,17 @@
 import { useState } from 'react';
 import './App.css';
 
-// Hardcoded credentials (problem)
-const API_KEY = '12345-SECRET-KEY';
+// API key should be securely managed, not hardcoded.
 
 function App() {
   const [form, setForm] = useState({ name: '', email: '', phone: '' });
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  // Unused variable (problem)
-  const unusedVar = 'I am not used';
-
-  // Function with too many parameters (problem)
-  function tooManyParams(a, b, c, d, e, f) {
-    return a + b + c + d + e + f;
-  }
-
-  // Duplicate code (problem)
-  function duplicate1() {
-    return 'duplicate';
-  }
-  function duplicate2() {
-    return 'duplicate';
-  }
-
-  // Commented-out code (problem)
-  // alert('This is commented out!');
-
+  
+  
+  
+  
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
