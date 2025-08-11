@@ -4,7 +4,7 @@ import './App.css';
 // API key should be securely managed, not hardcoded.
 
 function App() {
-  const [form, setForm] = useState({ name: '', email: '', phone: '' });
+  const [form, setForm] = useState({ name: '', email: '', phone: ''});
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -28,7 +28,7 @@ function App() {
       eval("console.log('Eval is dangerous!')");
       const res = await fetch('http://localhost:4000/api/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-api-key': API_KEY },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
       // Unhandled promise (problem)
@@ -49,7 +49,7 @@ function App() {
   return (
     <div className="centered-form-wrapper">
       <div className="advanced-form-card">
-        <h2 className="advanced-form-title">Advanced React Form</h2>
+        <h2 className="advanced-form-title">Formulaire d'enregistrement d'un client Starlink</h2>
         <form onSubmit={handleSubmit} autoComplete="off">
           <div>
             <label className="advanced-form-label">Name</label>
