@@ -13,7 +13,7 @@
     "trivy-scan": "docker run -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/Library/Caches:/root/.cache/ aquasec/trivy image devsecops-v2"
   },
   "dependencies": {
-    "axios": "^1.7.9",
+    "axios": "^1.8.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
