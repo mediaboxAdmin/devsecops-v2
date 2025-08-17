@@ -1,0 +1,77 @@
+name: Container Vulnerability Scanning with Trivy
+
+on:
+  push:
+    # branches: [main, master]
+    branches: nadan-trivy
+  pull_request:
+    branches: nadan-trivy
+
+jobs:
+  trivy-scan:
+    name: Scan Docker image with Trivy
+    runs-on: ubuntu-latest
+
+    steps:
+      # Étape 1: Checkout du code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Étape 2: Configuration de Docker Buildx
+      - name: Set up Docker QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Install Docker Compose
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/v2.27.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+          docker-compose --version
+
+      # Étape 3: Connexion à Docker Hub (si nécessaire)
+      # - name: Login to Docker Hub
+      #   uses: docker/login-action@v3
+      #   with:
+      #     username: ${{ secrets.DOCKER_HUB_USERNAME }}
+      #     password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      # Étape 4: Construire l'image Docker
+      - name: Build and tag Docker image
+        run: |
+          docker-compose -f docker-compose.yml build
+          echo "=== Images Docker disponibles ==="
+          docker images
+          echo "=== Identification de l'image construite ==="
+          # Trouver l'image qui contient 'devsecops' dans son nom
+          IMAGE_NAME=$(docker images --format "table {{.Repository}}:{{.Tag}}" | grep -E "(devsecops|$(basename $PWD))" | head -1)
+          echo "Image trouvée: $IMAGE_NAME"
+          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
+
+      # Étape 5: Scanner l'image avec Trivy
+      - name: Scan image with Trivy
+        uses: aquasecurity/trivy-action@0.14.0
+        with:
+          # Scan l'image que vous venez de construire
+          image-ref: ${{ env.IMAGE_NAME }}
+          # Format de sortie du rapport
+          format: "table"
+          # Niveau de gravité minimum à afficher
+          severity: "CRITICAL,HIGH,MEDIUM,LOW,UNKNOWN"
+          # Types de vulnérabilités à scanner
+          # scanners: "vuln"
+          # Sortie le rapport dans un fichier
+          output: "trivy-results.txt"
+          # Quitte avec un code d'erreur si des vulnérabilités critiques sont trouvées
+          exit-code: "1"
+          # Ignorer les vulnérabilités non corrigées
+          ignore-unfixed: false
+
+      # Étape 6: Upload le rapport (optionnel)
+      - name: Upload Trivy scan results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-scan-results
+          path: trivy-results.txt
