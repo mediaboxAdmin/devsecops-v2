@@ -4,6 +4,7 @@ import './App.css';
 // API key should be securely managed, not hardcoded.
 
 function App() {
+  // naDan
   const [form, setForm] = useState({ name: '', email: '', phone: ''});
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
