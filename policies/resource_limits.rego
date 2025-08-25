@@ -1,4 +1,4 @@
-package kubernetes.security
+package main
 
 deny[msg] {
   input.kind == "Pod"
