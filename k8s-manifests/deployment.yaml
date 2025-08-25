@@ -10,6 +10,7 @@ spec:
   selector:
     matchLabels:
       app: my-deploy
+      env: staging
   template:
     metadata:
       labels:
