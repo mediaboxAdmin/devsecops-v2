@@ -4,7 +4,13 @@ metadata:
   name: pod-test
   labels:
     app: my-app
+    env: production
 spec:
   containers:
     - name: app
-      image: nginx:latest
+      # image: nginx:latest
+      image: nginx:1.25.0  # REMPLACER 'latest' par une version spécifique
+      resources:
+        limits:
+          cpu: "500m"     #  AJOUTER LIMITE CPU
+          memory: "256Mi" # AJOUTER LIMITE MÉMOIRE

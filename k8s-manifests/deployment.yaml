@@ -4,6 +4,7 @@ metadata:
   name: deployment-test
   labels:
     app: my-deploy
+    env: staging 
     
 spec:
   replicas: 2
