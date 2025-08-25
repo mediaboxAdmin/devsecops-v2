@@ -10,9 +10,6 @@ function App() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   
-  
-  
-  
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -23,8 +20,6 @@ function App() {
     setError('');
     setSubmitted(false);
     try {
-      // Console.log left in production (problem)
-      console.log('Submitting form:', form);
       // Use of eval (security risk)
       eval("console.log('Eval is dangerous!')");
       const res = await fetch('http://localhost:4000/api/submit', {
