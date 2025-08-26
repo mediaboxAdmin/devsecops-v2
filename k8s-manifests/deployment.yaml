@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: nginx:1.4.0
+          image: nginx:latest
           resources:
             limits:
               cpu: "500m"
