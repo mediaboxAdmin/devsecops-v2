@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: nginx:1.25.0
+          image: nginx:4.0.1  # REMPLACER 'latest' par une version spécifique
           resources:
             limits:
               cpu: "500m"
