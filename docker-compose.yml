@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  web:
+    build: .
+    ports:
+      - "5173:5173"
+    volumes:
+      # Mount le code source (syntaxe Windows)
+      - type: bind
+        source: .
+        target: /app
+      # Volume pour node_modules
+      - type: volume
+        source: node_modules_cache
+        target: /app/node_modules
+    environment:
+      - HOST=0.0.0.0
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+      - FAST_REFRESH=true
+      # Variables spécifiques Windows
+      - WDS_SOCKET_HOST=localhost
+      - WDS_SOCKET_PORT=5173
+    stdin_open: true
+    tty: true
+
+volumes:
+  node_modules_cache:
